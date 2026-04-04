@@ -231,7 +231,9 @@ export default function App() {
           © 2026 愿景中心。保留所有权利。
         </div>
         <div className="flex gap-8">
-          <a href="#" className="text-slate-500 hover:text-white transition-colors"><Github size={20} /></a>
+          <a href="https://github.com/linhexing2/linhexing2.github.io" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-white transition-colors">
+            <Github size={20} />
+          </a>
         </div>
       </footer>
     </div>
