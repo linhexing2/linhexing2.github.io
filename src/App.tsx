@@ -26,7 +26,7 @@ const projects = [
     title: "关系图",
     category: "可视化 / 工具",
     description: "一个深度交互的关系网络可视化工具，展示复杂数据间的内在联系。",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
     tech: ["GitHub Pages", "D3.js", "Visualization"],
     link: "https://linhexing2.github.io/guanxitu"
   },
@@ -84,8 +84,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
           <motion.img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-            whileHover={{ scale: 1.1 }}
+            className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
