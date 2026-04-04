@@ -130,88 +130,9 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
 };
 
 export default function App() {
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-
-  // Check local storage on mount
-  useEffect(() => {
-    const auth = localStorage.getItem('vault_access');
-    if (auth === 'true') setIsAuthorized(true);
-  }, []);
-
-  const handleAccess = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Default key is 'admin', user can change this later
-    if (password === 'admin') {
-      localStorage.setItem('vault_access', 'true');
-      setIsAuthorized(true);
-      setError(false);
-    } else {
-      setError(true);
-      setTimeout(() => setError(false), 1000);
-    }
-  };
-
-  if (!isAuthorized) {
-    return (
-      <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6 selection:bg-accent/30">
-        <div className="fixed inset-0 -z-10 opacity-20">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px]" />
-        </div>
-        
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          className="glass-panel p-12 rounded-[3rem] max-w-md w-full text-center"
-        >
-          <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
-            <Sparkles size={32} className="text-accent" />
-          </div>
-          
-          <h1 className="text-3xl font-display font-bold mb-2 tracking-tight">私密访问</h1>
-          <p className="text-slate-500 text-sm mb-8">请输入访问密钥以解锁愿景中心</p>
-          
-          <form onSubmit={handleAccess} className="space-y-4">
-            <div className="relative">
-              <input 
-                type="password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="输入密钥..."
-                className={`w-full bg-white/5 border ${error ? 'border-red-500' : 'border-white/10'} rounded-2xl px-6 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-accent transition-all`}
-              />
-              {error && (
-                <motion.p 
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="absolute -bottom-6 left-0 w-full text-[10px] font-bold text-red-500 uppercase tracking-widest"
-                >
-                  密钥错误，请重试
-                </motion.p>
-              )}
-            </div>
-            
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full bg-white text-black font-bold py-4 rounded-2xl hover:bg-accent transition-colors"
-            >
-              解锁
-            </motion.button>
-          </form>
-          
-          <div className="mt-12 text-[10px] font-bold text-slate-700 tracking-[0.2em] uppercase">
-            Vault Security Protocol v1.0
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
 
   return (
     <div ref={containerRef} className="relative min-h-screen selection:bg-accent/30 selection:text-white overflow-x-hidden">
