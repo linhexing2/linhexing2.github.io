@@ -20,7 +20,17 @@ import {
 
 // --- Constants & Types ---
 
-const projects = [
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  tech: string[];
+  link: string;
+}
+
+const projects: Project[] = [
   {
     id: 1,
     title: "关系图",
@@ -38,6 +48,15 @@ const projects = [
     image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=800",
     tech: ["Bilibili", "Content Creation", "Motion"],
     link: "https://space.bilibili.com/3537124691282425?spm_id_from=333.1007.0.0"
+  },
+  {
+    id: 3,
+    title: "我的世界服务器连接查询",
+    category: "游戏 / 工具",
+    description: "实时查询我的世界服务器连接状态与详细信息，支持多种版本协议。",
+    image: "https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?auto=format&fit=crop&q=80&w=800",
+    tech: ["Minecraft", "Query", "API"],
+    link: "https://linhexing2.github.io/FWQ_chaxun/"
   }
 ];
 
@@ -68,15 +87,18 @@ const CinematicText = ({ text, className = "" }: { text: string; className?: str
   );
 };
 
-const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
+const ProjectCard = ({ project, index }: { project: Project; index: number; key?: number }) => {
   return (
-    <motion.div
+    <motion.a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.8 }}
       whileHover={{ y: -10 }}
-      className="group relative"
+      className="group relative block cursor-pointer"
     >
       <div className="glass-panel rounded-[2rem] overflow-hidden flex flex-col h-full">
         {/* Image Container */}
@@ -112,19 +134,15 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             ))}
           </div>
 
-          <motion.a
-            href={project.link}
-            whileHover={{ x: 5 }}
-            className="flex items-center gap-2 text-sm font-bold text-white group-hover:text-accent"
-          >
+          <div className="flex items-center gap-2 text-sm font-bold text-white group-hover:text-accent transition-all group-hover:translate-x-1">
             探索项目 <ArrowRight size={16} />
-          </motion.a>
+          </div>
         </div>
       </div>
       
       {/* Glow Effect */}
       <div className="absolute -inset-1 bg-gradient-to-r from-accent to-accent-purple rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10" />
-    </motion.div>
+    </motion.a>
   );
 };
 
@@ -212,7 +230,7 @@ export default function App() {
               <div className="text-3xl font-display font-bold">作品存档</div>
             </div>
             <div className="hidden md:block text-slate-500 text-xs font-mono">
-              [ 共 02 个项目 ]
+              [ 共 03 个项目 ]
             </div>
           </div>
 
